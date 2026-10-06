@@ -7,6 +7,7 @@ import './dashboards/energy/energy.css'
 import './dashboards/rail/rail.css'
 import './dashboards/traffic/traffic.css'
 import './dashboards/datacenters/datacenters.css'
+import './dashboards/aviation/aviation.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
