@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
-/// <reference types="google.maps" />
 
 interface ImportMetaEnv {
-	readonly VITE_TRAFIKLAB_GTFS_RT_KEY?: string
+	readonly VITE_OPS_DATA_SOURCE?: string
 }
 
 interface ImportMeta {

@@ -1,8 +1,8 @@
 {
-  "name": "SL Network Pulse",
-  "description": "Real-time operations dashboard and network map for Stockholm public transit (SL).",
+  "name": "Nordic Operational Intelligence",
+  "description": "Modular operational intelligence dashboard framework for Nordic infrastructure domains.",
   "requestFramePermissions": [],
   "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+    "MAJOR_CAPABILITY_BROWSER_BASED_DASHBOARD"
   ]
 }

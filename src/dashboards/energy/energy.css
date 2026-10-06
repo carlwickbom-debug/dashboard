@@ -1,0 +1,56 @@
+.energy-command-strip { background: linear-gradient(90deg, color-mix(in srgb, var(--status-warning) 8%, var(--bg-panel)), var(--bg-panel)); }
+.energy-kpi { padding: 18px 14px 14px; }
+.energy-kpi > strong { display: block; font: 24px var(--mono); font-weight: 500; letter-spacing: -.04em; }
+.energy-kpi > strong small { color: var(--text-muted); font-size: 10px; }
+.energy-kpi > span { margin-top: 9px; display: inline-flex; align-items: center; gap: 4px; color: var(--status-warning); font: 8px var(--mono); }
+.energy-kpi > span.energy-normal { color: var(--status-ok); }
+.energy-kpi p { margin-top: 8px; color: var(--text-muted); font-size: 8px; }
+.energy-line-chart { padding: 19px 15px 8px; }
+.energy-line-chart svg { width: 100%; height: 112px; overflow: visible; }
+.energy-chart-axis { stroke: var(--border); stroke-width: .4; }
+.energy-chart-line { fill: none; stroke: var(--accent); stroke-width: 1.8; vector-effect: non-scaling-stroke; }
+.energy-chart-point { fill: var(--accent); stroke: var(--bg-panel); stroke-width: 1; }
+.energy-chart-labels { display: flex; justify-content: space-between; color: var(--text-muted); font: 7px var(--mono); }
+.energy-chart { padding: 20px 15px; }
+.energy-chart-grid { display: grid; gap: 15px; }
+.energy-chart-row { display: grid; grid-template-columns: 55px minmax(70px, 1fr) 64px; align-items: center; gap: 8px; }
+.energy-chart-row > span { color: var(--text-muted); font: 8px var(--mono); }
+.energy-chart-track { height: 7px; background: var(--bg-secondary); overflow: hidden; }
+.energy-chart-track i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--status-info)); }
+.energy-chart-row strong { text-align: right; font: 8px var(--mono); }
+.generation-mix { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 23px; padding: 20px 15px; }
+.generation-donut { width: 105px; height: 105px; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--accent) 0 28.4%, var(--status-info) 28.4% 70.2%, var(--status-warning) 70.2% 77.2%, var(--status-critical) 77.2% 81.3%, var(--text-muted) 81.3% 100%); position: relative; }
+.generation-donut::after { content: ''; position: absolute; inset: 14px; border-radius: 50%; background: var(--bg-panel); }
+.generation-donut > div { position: relative; z-index: 1; text-align: center; }
+.generation-donut strong,.generation-donut span { display: block; }
+.generation-donut strong { font: 18px var(--mono); }
+.generation-donut span { margin-top: 3px; color: var(--text-muted); font: 7px var(--mono); }
+.generation-legend { display: grid; gap: 11px; }
+.generation-legend > div { display: grid; grid-template-columns: 7px minmax(0, 1fr) 40px auto; align-items: center; gap: 8px; }
+.generation-legend > div > div { min-width: 0; }
+.generation-legend strong,.generation-legend small { display: block; }
+.generation-legend strong { font-size: 9px; }
+.generation-legend small { margin-top: 3px; color: var(--text-muted); font-size: 7px; }
+.generation-legend b { font: 8px var(--mono); text-align: right; }
+.generation-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.generation-wind { background: var(--status-info); }.generation-solar { background: var(--status-warning); }.generation-thermal-other { background: var(--status-critical); }
+.transmission-overview { padding: 17px 15px; }
+.transmission-flow { display: grid; grid-template-columns: 1fr 75px 1fr; align-items: center; gap: 9px; }
+.transmission-arc { min-height: 71px; padding: 11px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--border); background: var(--bg-secondary); text-align: center; }
+.transmission-arc span { color: var(--text-muted); font: 7px var(--mono); letter-spacing: .08em; }
+.transmission-arc strong { margin-top: 6px; font: 13px var(--mono); }
+.transmission-import { border-left: 2px solid var(--status-info); }.transmission-export { border-right: 2px solid var(--status-ok); }
+.transmission-core { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--accent); }
+.transmission-core strong { color: var(--text-muted); font: 6px var(--mono); letter-spacing: .08em; }.transmission-core span { color: var(--status-ok); font: 8px var(--mono); }
+.transmission-constraints { margin-top: 13px; display: grid; gap: 8px; }
+.constraint { display: grid; grid-template-columns: minmax(0, 1fr) 90px 28px; align-items: center; gap: 8px; padding: 9px; border: 1px solid var(--border); background: var(--bg-secondary); }
+.constraint > div:first-child span,.constraint > div:first-child strong { display: block; }.constraint > div:first-child span { color: var(--text-muted); font: 7px var(--mono); }.constraint > div:first-child strong { margin-top: 3px; font-size: 8px; }
+.constraint-meter { height: 4px; background: var(--bg-primary); overflow: hidden; }.constraint-meter i { display: block; height: 100%; background: var(--status-warning); }.constraint > b { font: 7px var(--mono); text-align: right; }
+.constraint-critical .constraint-meter i { background: var(--status-critical); }.constraint-ok .constraint-meter i { background: var(--status-ok); }
+.country-energy-list { padding: 8px 13px 13px; }.country-energy-row { min-height: 61px; display: grid; grid-template-columns: 112px minmax(0, 1fr) 58px auto; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }.country-energy-row:last-child { border: 0; }
+.country-energy-row > div:first-child strong,.country-energy-row > div:first-child span { display: block; }.country-energy-row > div:first-child strong { font-size: 10px; }.country-energy-row > div:first-child span { margin-top: 4px; color: var(--text-muted); font: 7px var(--mono); }
+.country-energy-values { display: flex; gap: 14px; color: var(--text-muted); font: 7px var(--mono); }.country-energy-values b { color: var(--text-primary); font-size: 9px; }.country-energy-delta { display: flex; align-items: center; gap: 2px; font: 8px var(--mono); }.country-energy-delta.positive { color: var(--status-ok); }.country-energy-delta.negative { color: var(--status-critical); }
+.constraint-list { padding: 11px; display: grid; gap: 8px; }.constraint-card { padding: 11px; border: 1px solid var(--border); background: var(--bg-secondary); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; }.constraint-card > div:first-child span,.constraint-card > div:first-child strong { display: block; }.constraint-card > div:first-child span { color: var(--text-muted); font: 7px var(--mono); }.constraint-card > div:first-child strong { margin-top: 4px; font-size: 9px; }.constraint-card-values { text-align: right; }.constraint-card-values b,.constraint-card-values small { display: block; }.constraint-card-values b { font: 11px var(--mono); }.constraint-card-values small { margin-top: 3px; color: var(--text-muted); font: 7px var(--mono); }.constraint-progress { grid-column: 1 / -1; height: 4px; background: var(--bg-primary); overflow: hidden; }.constraint-progress i { display: block; height: 100%; background: var(--status-warning); }.constraint-card p { grid-column: 1 / -1; margin: 0; color: var(--text-muted); font-size: 8px; line-height: 1.45; }.constraint-card .status-indicator { grid-column: 1 / -1; justify-self: start; }.constraint-critical .constraint-progress i { background: var(--status-critical); }.constraint-ok .constraint-progress i { background: var(--status-ok); }
+.energy-events { padding: 9px; display: grid; gap: 8px; }.energy-event-feed { max-height: 290px; overflow: auto; }.energy-provider-grid { padding: 9px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }.energy-provider-row { min-height: 59px; padding: 10px; border: 1px solid var(--border); background: var(--bg-secondary); display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 8px; }.energy-provider-row > div strong,.energy-provider-row > div span { display: block; }.energy-provider-row > div strong { font: 8px var(--mono); }.energy-provider-row > div span { margin-top: 4px; color: var(--text-muted); font: 7px var(--mono); }.energy-provider-row.status-warning { border-left: 2px solid var(--status-warning); }.energy-provider-row.status-unavailable { border-left: 2px solid var(--status-critical); }
+@media (max-width: 1100px) { .generation-mix { grid-template-columns: 105px minmax(0, 1fr); }.country-energy-row { grid-template-columns: 100px minmax(0, 1fr) 58px; }.country-energy-row .status-indicator { display: none; }.energy-provider-grid { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .generation-mix,.transmission-flow,.country-energy-row { grid-template-columns: 1fr; }.generation-donut { margin: 0 auto; }.country-energy-values { flex-wrap: wrap; }.country-energy-delta { justify-self: start; }.energy-provider-row { grid-template-columns: minmax(0, 1fr) auto; }.energy-provider-row .status-indicator { display: none; } }

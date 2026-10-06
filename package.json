@@ -7,15 +7,11 @@
     "dev": "vite --host 0.0.0.0 --port 3000",
     "build": "tsc -b && vite build",
     "lint": "tsc --noEmit",
+    "test": "vitest run",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@googlemaps/js-api-loader": "^2.1.1",
-    "@googlemaps/markerclusterer": "^2.6.2",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
-    "gtfs-realtime-bindings": "^2.2.0",
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
@@ -23,6 +19,11 @@
     "vite": "latest"
   },
   "devDependencies": {
-    "@types/google.maps": "^3.66.3"
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "jsdom": "latest",
+    "vitest": "latest"
   }
 }

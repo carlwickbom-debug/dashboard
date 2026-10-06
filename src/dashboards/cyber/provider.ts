@@ -1,0 +1,7 @@
+import type { DashboardDefinition, DashboardSnapshot } from '../../data/models'
+import { createMockProvider } from '../../data/providers/mockProvider'
+import { events } from '../../data/mock/mockData'
+import { Cyber } from './Cyber'
+
+const snapshot: DashboardSnapshot = { status: 'CRITICAL', health: 68, headline: 'Credential spray pattern detected', updatedAt: '09:36 UTC', source: 'SIEM and identity controls', freshness: 'FRESH', metrics: [{ label: 'Blocked events', value: '1,284', detail: 'Last 24 hours' }, { label: 'Active alerts', value: '03', detail: 'Two unacknowledged' }, { label: 'MFA coverage', value: '99.2%', detail: 'All privileged access' }], events: events.cyber, summary: 'Identity controls are active; a multi-source authentication pattern requires containment.', mapLayers: [{ id: 'cyber', label: 'Threat activity', color: '#e34b52', points: [{ id: 'c1', label: 'Northern Europe', latitude: 60.17, longitude: 24.94, severity: 'CRITICAL', detail: 'Credential spray pattern' }, { id: 'c2', label: 'Stockholm', latitude: 59.33, longitude: 18.07, severity: 'LOW' }] }] }
+export const cyberProvider: DashboardDefinition<DashboardSnapshot> = { id: 'cyber', name: 'CYBER SECURITY', description: 'Threat detection, identity controls, incident response and security posture.', icon: 'shield', category: 'Security', component: Cyber, enabled: true, provider: createMockProvider('cyber', snapshot) }

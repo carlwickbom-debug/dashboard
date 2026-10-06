@@ -1,0 +1,7 @@
+import type { DashboardDefinition, DashboardSnapshot } from '../../data/models'
+import { createMockProvider } from '../../data/providers/mockProvider'
+import { events } from '../../data/mock/mockData'
+import { DataCenters } from './DataCenters'
+
+const snapshot: DashboardSnapshot = { status: 'WARNING', health: 84, headline: 'Cooling load elevated at one facility', updatedAt: '08:54 UTC', source: 'Facility telemetry', freshness: 'STALE', metrics: [{ label: 'Capacity', value: '72%', detail: 'Across 14 sites' }, { label: 'Power draw', value: '81.6 MW', detail: 'Forecast 79.2 MW' }, { label: 'Cooling', value: '12% high', detail: 'Facility 04' }], events: events.datacenters, summary: 'All critical workloads are operating, but one facility is outside its cooling tolerance.', mapLayers: [{ id: 'dc', label: 'Data center network', color: '#5b9fec', points: [{ id: 'd1', label: 'Oslo', latitude: 59.91, longitude: 10.75, severity: 'HIGH' }, { id: 'd2', label: 'Stockholm', latitude: 59.33, longitude: 18.07, severity: 'LOW' }, { id: 'd3', label: 'Helsinki', latitude: 60.17, longitude: 24.94, severity: 'INFO' }] }] }
+export const datacentersProvider: DashboardDefinition<DashboardSnapshot> = { id: 'datacenters', name: 'DATA CENTERS', description: 'Facility capacity, power, cooling, and service availability.', icon: 'building', category: 'Infrastructure', component: DataCenters, enabled: true, provider: createMockProvider('datacenters', snapshot) }
