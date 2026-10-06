@@ -6,6 +6,7 @@ import './styles/design-system.css'
 import './dashboards/energy/energy.css'
 import './dashboards/rail/rail.css'
 import './dashboards/traffic/traffic.css'
+import './dashboards/datacenters/datacenters.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
