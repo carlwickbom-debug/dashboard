@@ -1,5 +1,7 @@
 import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
+import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
+import { maritimeAnomalyRules } from '../../data/anomalies/domainRules'
 import { events } from '../../data/mock/mockData'
 import { Maritime, type MaritimeData } from './Maritime'
 
@@ -28,4 +30,4 @@ const data: MaritimeData = {
   mapLayers: [{ id: 'maritime-routes', label: 'Shipping lanes', color: '#56c7a5', lines: [{ id: 'lane-gothenburg', label: 'Göteborg channel', points: [{ id: 'port-gothenburg', label: 'Göteborg Port', latitude: 57.71, longitude: 12.01, severity: 'CRITICAL' }, { id: 'port-stockholm', label: 'Stockholm Harbor', latitude: 59.33, longitude: 18.07, severity: 'LOW' }], color: '#e34b52', width: 2 }], points: [{ id: 'port-gothenburg', label: 'Göteborg Port', latitude: 57.71, longitude: 12.01, severity: 'CRITICAL', detail: 'Navigation aid offline' }, { id: 'port-oslo', label: 'Oslo Port', latitude: 59.91, longitude: 10.75, severity: 'LOW' }] }],
 }
 
-export const maritimeProvider: DashboardDefinition<MaritimeData> = { id: 'maritime', name: 'MARITIME', description: 'Vessel traffic, port access, navigation, waterway safety and AIS feed health.', icon: 'ship', category: 'Mobility', component: Maritime, enabled: true, provider: createMockProvider('maritime', data) }
+export const maritimeProvider: DashboardDefinition<MaritimeData> = { id: 'maritime', name: 'MARITIME', description: 'Vessel traffic, port access, navigation, waterway safety and AIS feed health.', icon: 'ship', category: 'Mobility', component: Maritime, enabled: true, provider: createAnomalyAwareProvider({ id: 'maritime', provider: createMockProvider('maritime', data), rules: maritimeAnomalyRules }) }

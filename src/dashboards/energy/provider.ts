@@ -1,5 +1,7 @@
 import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
+import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
+import { energyAnomalyRules } from '../../data/anomalies/domainRules'
 import { events } from '../../data/mock/mockData'
 import { Energy, type EnergyData } from './Energy'
 
@@ -49,4 +51,4 @@ const data: EnergyData = {
   ],
 }
 
-export const energyProvider: DashboardDefinition<EnergyData> = { id: 'energy', name: 'ENERGY', description: 'Generation, storage, grid stability and renewable capacity.', icon: 'zap', category: 'Infrastructure', component: Energy, enabled: true, provider: createMockProvider('energy', data) }
+export const energyProvider: DashboardDefinition<EnergyData> = { id: 'energy', name: 'ENERGY', description: 'Generation, storage, grid stability and renewable capacity.', icon: 'zap', category: 'Infrastructure', component: Energy, enabled: true, provider: createAnomalyAwareProvider({ id: 'energy', provider: createMockProvider('energy', data), rules: energyAnomalyRules }) }

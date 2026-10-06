@@ -1,5 +1,7 @@
 import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
+import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
+import { datacenterAnomalyRules, dataCenterHistory } from '../../data/anomalies/domainRules'
 import { events } from '../../data/mock/mockData'
 import { DataCenters, type DataCenterData } from './DataCenters'
 
@@ -33,4 +35,4 @@ const data: DataCenterData = {
   mapLayers: [{ id: 'dc-capacity', label: 'Facility capacity', color: '#5b9fec', points: [{ id: 'dc-oslo', label: 'Oslo Core', latitude: 59.91, longitude: 10.75, severity: 'HIGH', detail: '42 MW · Degraded' }, { id: 'dc-stockholm', label: 'Stockholm Edge', latitude: 59.33, longitude: 18.07, severity: 'LOW', detail: '28 MW · Operational' }, { id: 'dc-gothenburg', label: 'Gothenburg Transit', latitude: 57.71, longitude: 12.0, severity: 'HIGH', detail: '34 MW · Partial outage' }, { id: 'dc-helsinki', label: 'Helsinki Relay', latitude: 60.17, longitude: 24.94, severity: 'INFO', detail: 'Capacity unknown' }, { id: 'dc-copenhagen', label: 'Copenhagen Relay', latitude: 55.68, longitude: 12.57, severity: 'LOW', detail: '18 MW · Operational' }, { id: 'dc-reykjavik', label: 'Reykjavík Regional', latitude: 64.15, longitude: -21.94, severity: 'MEDIUM', detail: '14 MW · Maintenance' }] }],
 }
 
-export const datacentersProvider: DashboardDefinition<DataCenterData> = { id: 'datacenters', name: 'DATA CENTERS', description: 'Facility capacity, power, cooling, network, energy and service availability across Nordic countries.', icon: 'building', category: 'Infrastructure', component: DataCenters, enabled: true, provider: createMockProvider('datacenters', data) }
+export const datacentersProvider: DashboardDefinition<DataCenterData> = { id: 'datacenters', name: 'DATA CENTERS', description: 'Facility capacity, power, cooling, network, energy and service availability across Nordic countries.', icon: 'building', category: 'Infrastructure', component: DataCenters, enabled: true, provider: createAnomalyAwareProvider({ id: 'datacenters', provider: createMockProvider('datacenters', data), rules: datacenterAnomalyRules, thresholds: { loadChangeMW: 5 }, historicalValues: dataCenterHistory }) }

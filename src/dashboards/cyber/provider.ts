@@ -1,5 +1,7 @@
 import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
+import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
+import { cyberAnomalyRules } from '../../data/anomalies/domainRules'
 import { events } from '../../data/mock/mockData'
 import { Cyber, type CyberData, type Vulnerability } from './Cyber'
 
@@ -36,4 +38,4 @@ const data: CyberData = {
   source: 'Mock Nordic vulnerability intelligence provider',
 }
 
-export const cyberProvider: DashboardDefinition<CyberData> = { id: 'cyber', name: 'CYBER SECURITY', description: 'Defensive vulnerability monitoring, exploitation status, remediation posture and Nordic exposure.', icon: 'shield', category: 'Security', component: Cyber, enabled: true, provider: createMockProvider('cyber', data) }
+export const cyberProvider: DashboardDefinition<CyberData> = { id: 'cyber', name: 'CYBER SECURITY', description: 'Defensive vulnerability monitoring, exploitation status, remediation posture and Nordic exposure.', icon: 'shield', category: 'Security', component: Cyber, enabled: true, provider: createAnomalyAwareProvider({ id: 'cyber', provider: createMockProvider('cyber', data), rules: cyberAnomalyRules }) }
