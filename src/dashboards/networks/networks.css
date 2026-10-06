@@ -1,0 +1,62 @@
+.networks-command-strip { margin-bottom: 13px; }
+.network-kpi { display: flex; flex-direction: column; gap: 6px; min-height: 105px; }
+.network-kpi strong { color: #e8effa; font-size: 28px; font-weight: 500; letter-spacing: -0.04em; }
+.network-kpi strong small { color: #7184a0; font-size: 11px; font-weight: 580; }
+.network-kpi span { display: flex; align-items: center; gap: 5px; color: #8599b4; font-size: 10px; font-weight: 620; }
+.network-kpi span.critical { color: #f08086; }
+.network-kpi span.warning { color: #f0c566; }
+.network-kpi span.normal { color: #62c5ae; }
+.network-kpi p { margin: 3px 0 0; color: #5f7891; font-size: 9px; }
+.network-topology { position: relative; min-height: 310px; display: flex; flex-direction: column; }
+.network-topology svg { width: 100%; height: 290px; overflow: visible; }
+.network-link { cursor: pointer; outline: none; }
+.network-link line { transition: opacity .17s ease, stroke-width .17s ease; }
+.network-link:hover line, .network-link:focus-visible line { stroke-opacity: 1; stroke-width: 2; }
+.network-node text { fill: #c9d7e8; font-family: inherit; font-size: 1.75px; font-weight: 650; letter-spacing: .07em; paint-order: stroke; stroke: #0e1c32; stroke-width: .22px; }
+.network-topology-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1px; color: #7087a3; font-size: 8px; font-weight: 600; }
+.network-topology-legend span { display: flex; align-items: center; gap: 4px; }
+.network-topology-legend i { width: 6px; height: 6px; border-radius: 50%; background: #72869d; }
+.network-topology-legend i.up { background: #56c7a5; }.network-topology-legend i.degraded { background: #e4b94d; }.network-topology-legend i.down { background: #e34b52; }.network-topology-legend i.maintenance { background: #b49cf4; }
+.network-topology-detail { position: absolute; right: 12px; top: 12px; width: 160px; padding: 9px 10px; display: grid; gap: 5px; background: rgba(7,18,32,.96); border: 1px solid #2a4160; border-radius: 7px; box-shadow: 0 10px 30px rgba(0,0,0,.3); }
+.network-topology-detail span { color: #54708e; font-size: 8px; font-weight: 700; letter-spacing: .08em; }
+.network-topology-detail strong { color: #dbe7f6; font-size: 9px; }
+.network-topology-detail small { color: #7c91aa; font-size: 8px; }
+.network-topology-detail b { color: #f0c566; font-size: 9px; }
+.network-topology-detail .severity-badge { justify-self: start; }
+.network-link-list { display: grid; gap: 8px; }
+.network-link-row { position: relative; display: grid; grid-template-columns: minmax(150px, .85fr) minmax(190px, 1.15fr) 28px; align-items: center; gap: 9px; min-height: 69px; padding: 7px 8px; border: 1px solid #182a40; border-radius: 7px; background: #102238; }
+.network-link-row::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 2px; background: #56c7a5; }
+.network-link-row.status-degraded::before { background: #e4b94d; }.network-link-row.status-down::before { background: #e34b52; }.network-link-row.status-maintenance::before { background: #b49cf4; }.network-link-row.status-unknown::before { background: #72869d; }
+.network-link-title { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.network-link-icon { width: 27px; height: 27px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 6px; background: rgba(91,159,236,.1); color: #62a8ef; }
+.network-link-title div { display: grid; min-width: 0; gap: 3px; }
+.network-link-title strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #c8d7e9; font-size: 9px; }
+.network-link-title span { color: #607989; font-size: 8px; }
+.network-link-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.network-link-values div { display: grid; gap: 3px; }
+.network-link-values span { font-size: 7px; color: #5d7590; }
+.network-link-values strong { color: #a5b7cd; font-size: 9px; font-weight: 590; }
+.network-link-meter { width: 28px; height: 18px; position: relative; }
+.network-link-meter i { position: absolute; inset: 0 auto 0 0; display: block; border-radius: 3px; }
+.network-link-meter i.normal { background: #56c7a5; }.network-link-meter i.warning { background: #e4b94d; }.network-link-meter i.critical { background: #e34b52; }
+.network-provider-list, .network-incident-list, .network-provider-health { display: grid; gap: 7px; }
+.network-provider-row, .network-incident, .network-health-row { display: grid; grid-template-columns: 28px minmax(150px, 1fr) auto auto; gap: 8px; align-items: center; min-height: 49px; padding: 7px 8px; border-left: 2px solid #56c7a5; border-radius: 6px; background: #102238; }
+.network-provider-row.status-degraded, .network-provider-row.status-warning, .network-incident.status-warning, .network-health-row.status-warning { border-left-color: #e4b94d; }
+.network-provider-row.status-outage, .network-provider-row.status-critical, .network-incident.status-critical, .network-health-row.status-unavailable { border-left-color: #e34b52; }
+.network-provider-icon, .network-incident-icon { width: 27px; height: 27px; display: grid; place-items: center; border-radius: 6px; color: #62a8ef; background: rgba(91,159,236,.1); }
+.network-provider-row > div:nth-child(2), .network-incident > div:nth-child(2) { display: grid; gap: 3px; min-width: 0; }
+.network-provider-row strong, .network-incident strong { color: #c5d5e7; font-size: 9px; }
+.network-provider-row span, .network-incident span { color: #607989; font-size: 8px; }
+.network-provider-row small, .network-incident small { color: #5c748d; font-size: 7px; line-height: 1.4; }
+.network-provider-metrics { display: grid; gap: 3px; text-align: right; }
+.network-provider-metrics b { color: #a8bdd3; font-size: 8px; }
+.network-provider-metrics small { color: #61788f; font-size: 7px; }
+.network-health-row { grid-template-columns: minmax(150px, 1fr) auto auto; }
+.network-health-row > div { display: grid; gap: 3px; }
+.network-health-row strong { color: #c5d5e7; font-size: 9px; }
+.network-health-row span { color: #607989; font-size: 8px; }
+.network-events { display: grid; gap: 7px; }
+.network-event-feed .event-list { max-height: none; }
+.network-incident { grid-template-columns: 28px minmax(150px, 1fr) auto; }
+@media (max-width: 900px) { .network-link-row { grid-template-columns: 1fr 24px; }.network-link-values { grid-column: 1 / -1; }.network-link-meter { display: none; }.network-provider-row, .network-incident { grid-template-columns: 28px minmax(120px, 1fr) auto; }.network-provider-metrics { grid-column: 2 / -1; grid-template-columns: auto auto; justify-content: start; text-align: left; }.network-health-row { grid-template-columns: minmax(120px, 1fr) auto; }.network-health-row .status-indicator { grid-column: 2; } }
+@media (max-width: 620px) { .network-topology { min-height: 250px; }.network-topology svg { height: 230px; }.network-topology-detail { position: static; width: 100%; margin-top: 4px; }.network-link-values { grid-template-columns: repeat(3, 1fr); }.network-provider-row, .network-incident, .network-health-row { grid-template-columns: 25px 1fr; }.network-provider-row .severity-badge, .network-incident .severity-badge, .network-health-row .data-freshness-indicator, .network-health-row .status-indicator { grid-column: 2; justify-self: start; }.network-provider-metrics { grid-column: 2; } }

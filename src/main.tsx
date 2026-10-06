@@ -9,6 +9,8 @@ import './dashboards/traffic/traffic.css'
 import './dashboards/datacenters/datacenters.css'
 import './dashboards/aviation/aviation.css'
 import './dashboards/maritime/maritime.css'
+import './dashboards/networks/networks.css'
+import './dashboards/cyber/cyber.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
