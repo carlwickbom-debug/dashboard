@@ -1,0 +1,8 @@
+{
+  "name": "SL Network Pulse",
+  "description": "Real-time operations dashboard and network map for Stockholm public transit (SL).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
