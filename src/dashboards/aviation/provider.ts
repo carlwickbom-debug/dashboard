@@ -2,6 +2,8 @@ import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
 import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
 import { aviationAnomalyRules } from '../../data/anomalies/domainRules'
+import { createAviationProvider } from '../../data/providers/domainFactories'
+import type { AviationDataProvider } from '../../data/providers/contracts'
 import { events } from '../../data/mock/mockData'
 import { Aviation, type AviationData } from './Aviation'
 
@@ -32,4 +34,4 @@ const data: AviationData = {
   mapLayers: [{ id: 'airport-markers', label: 'Airports', color: '#5b9fec', points: [{ id: 'apt-oslo', label: 'Oslo International', latitude: 59.91, longitude: 10.75, severity: 'HIGH', detail: 'Restricted' }, { id: 'apt-stockholm', label: 'Stockholm Arlanda', latitude: 59.29, longitude: 18.08, severity: 'LOW', detail: 'Operational' }, { id: 'apt-helsinki', label: 'Helsinki Airport', latitude: 60.17, longitude: 24.94, severity: 'MEDIUM', detail: 'Degraded' }] }],
 }
 
-export const aviationProvider: DashboardDefinition<AviationData> = { id: 'aviation', name: 'AVIATION', description: 'Air traffic, weather, runway availability and flight corridor status.', icon: 'cloud', category: 'Mobility', component: Aviation, enabled: true, provider: createAnomalyAwareProvider({ id: 'aviation', provider: createMockProvider('aviation', data), rules: aviationAnomalyRules }) }
+export const aviationProvider: DashboardDefinition<AviationData, AviationDataProvider> = { id: 'aviation', name: 'AVIATION', description: 'Air traffic, weather, runway availability and flight corridor status.', icon: 'cloud', category: 'Mobility', component: Aviation, enabled: true, provider: createAviationProvider(createAnomalyAwareProvider({ id: 'aviation', provider: createMockProvider('aviation', data), rules: aviationAnomalyRules })) }

@@ -1,4 +1,5 @@
 import type { DashboardDefinition, DashboardStatus, OperationalEvent } from '../../data/models'
+import type { ProviderHealth as DomainProviderHealth } from '../../data/providers/contracts'
 import { aviationProvider } from '../aviation/provider'
 import { cyberProvider } from '../cyber/provider'
 import { datacentersProvider } from '../datacenters/provider'
@@ -44,19 +45,26 @@ const data: OverviewData = {
   countries,
   infrastructure,
   events: [],
-  providers: [
-    { name: 'ENERGY API', freshness: 'LIVE' }, { name: 'RAIL API', freshness: 'LIVE' }, { name: 'TRAFFIC API', freshness: 'DEGRADED' },
-    { name: 'DATACENTER FEED', freshness: 'LIVE' }, { name: 'AVIATION FEED', freshness: 'LIVE' }, { name: 'MARITIME FEED', freshness: 'STALE' },
-    { name: 'NETWORK TELEMETRY', freshness: 'OFFLINE' }, { name: 'CYBER FEED', freshness: 'LIVE' },
-  ],
+  providers: [],
 }
 
 async function aggregateEvents(load: 'load' | 'refresh'): Promise<OverviewData> {
-  const domainData = await Promise.all(domainProviders.map(async (entry) => ({
-    entry,
-    data: await entry.provider[load]() as { events?: OperationalEvent[] },
-  })))
-  const events: OverviewEvent[] = domainData.flatMap(({ entry, data: domain }) => (domain.events ?? []).map((event) => ({
+  const domainData = await Promise.all(domainProviders.map(async (entry) => {
+    const updated = await Promise.allSettled([
+      entry.provider[load]() as Promise<{ events?: OperationalEvent[] }>,
+      entry.provider.getHealth(),
+      entry.provider.getLastUpdated(),
+      Promise.resolve(entry.provider.getCapabilities()),
+    ])
+    const state = updated[0].status === 'fulfilled' ? updated[0].value : undefined
+    const health = updated[1].status === 'fulfilled' ? updated[1].value : { status: 'UNAVAILABLE' as const, freshness: 'OFFLINE' as const, message: 'Provider health check failed.' }
+    const lastUpdated = updated[2].status === 'fulfilled' ? updated[2].value : null
+    const capabilities = updated[3].status === 'fulfilled' ? updated[3].value : { mode: 'unknown', readOnly: true, supportsRefresh: false, supportsHistoricalData: false }
+    const failure = updated[0].status === 'rejected'
+    const reportedHealth = failure ? { status: 'UNAVAILABLE' as const, freshness: 'OFFLINE' as const, message: 'Provider request failed; cached Overview data is retained.' } satisfies DomainProviderHealth : health
+    return { entry, events: failure ? [] : state?.events ?? [], health: reportedHealth, updatedAt: lastUpdated, mode: capabilities.mode }
+  }))
+  const events: OverviewEvent[] = domainData.flatMap(({ entry, events: domainEvents }) => domainEvents.map((event) => ({
     ...event,
     relatedDashboard: event.relatedDashboard ?? entry.id,
     domain: entry.name,
@@ -69,10 +77,16 @@ async function aggregateEvents(load: 'load' | 'refresh'): Promise<OverviewData> 
   const infrastructure = data.infrastructure.map((item) => {
     const dashboardId = domainProviders.find((entry) => entry.name === item.domain)?.id
     const related = uniqueEvents.filter((event) => event.relatedDashboard === dashboardId)
-    const status: DashboardStatus = related.some((event) => event.severity === 'CRITICAL') ? 'CRITICAL' : related.some((event) => event.severity === 'HIGH') ? 'WARNING' : 'OK'
+    const provider = domainData.find(({ entry }) => entry.id === dashboardId)
+    const status: DashboardStatus = provider?.health.status ?? (related.some((event) => event.severity === 'CRITICAL') ? 'CRITICAL' : related.some((event) => event.severity === 'HIGH') ? 'WARNING' : 'OK')
     return { ...item, activeEvents: related.length, status }
   })
-  return { ...data, snapshot: { ...data.snapshot, events: uniqueEvents, updatedAt: new Date().toISOString(), summary: `${uniqueEvents.length} normalized operational events across ${domainProviders.length} domains.` }, countries, infrastructure, events: uniqueEvents }
+  const providers: OverviewData['providers'] = domainData.map(({ entry, health, updatedAt, mode }) => ({ name: entry.name, freshness: health.freshness, status: health.status, updatedAt, mode, message: health.message }))
+  const offlineCount = providers.filter((provider) => provider.freshness === 'OFFLINE').length
+  const staleCount = providers.filter((provider) => provider.freshness === 'STALE' || provider.freshness === 'DEGRADED').length
+  const overallStatus: DashboardStatus = offlineCount === providers.length ? 'UNAVAILABLE' : offlineCount || staleCount ? 'WARNING' : 'OK'
+  const freshness = offlineCount === providers.length ? 'OFFLINE' : offlineCount ? 'DEGRADED' : staleCount ? 'STALE' : 'FRESH'
+  return { ...data, snapshot: { ...data.snapshot, status: overallStatus, freshness, health: Math.round(((providers.length - offlineCount) / Math.max(providers.length, 1)) * 100), events: uniqueEvents, updatedAt: new Date().toISOString(), summary: `${uniqueEvents.length} normalized operational events across ${providers.length} domain providers; ${offlineCount} offline and ${staleCount} stale or degraded.` }, countries, infrastructure, events: uniqueEvents, providers }
 }
 
 export const overviewProvider: DashboardDefinition<OverviewData> = {

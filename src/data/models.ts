@@ -57,7 +57,7 @@ export interface MapLayer {
   regions?: Array<{ id: string; label: string; points: MapPoint[]; color: string }>
 }
 
-export interface DashboardDefinition<T = DashboardSnapshot> {
+export interface DashboardDefinition<T = DashboardSnapshot, P extends DashboardDataProvider<T> = DashboardDataProvider<T>> {
   id: string
   name: string
   description: string
@@ -65,5 +65,5 @@ export interface DashboardDefinition<T = DashboardSnapshot> {
   category: string
   component: ComponentType<{ data: T }>
   enabled: boolean
-  provider: DashboardDataProvider<T>
+  provider: P
 }

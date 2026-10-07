@@ -13,7 +13,7 @@ export function useDashboardData<T>(provider: DashboardDataProvider<T>) {
     try {
       setData(await provider.load())
     } catch (failure) {
-      setError(failure instanceof Error ? failure.message : 'Data source unavailable')
+      if (!data) setError(failure instanceof Error ? failure.message : 'Data source unavailable')
     } finally {
       setLoading(false)
     }
@@ -25,11 +25,11 @@ export function useDashboardData<T>(provider: DashboardDataProvider<T>) {
     try {
       setData(await provider.refresh())
     } catch (failure) {
-      setError(failure instanceof Error ? failure.message : 'Data refresh failed')
+      if (!data) setError(failure instanceof Error ? failure.message : 'Data refresh failed')
     } finally {
       setRefreshing(false)
     }
-  }, [provider])
+  }, [data, provider])
 
   useEffect(() => {
     void load()

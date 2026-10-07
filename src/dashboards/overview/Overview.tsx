@@ -12,7 +12,7 @@ import { StatusIndicator } from '../../components/status/StatusIndicator'
 export interface OverviewEvent extends OperationalEvent { domain: string }
 export interface CountryStatus { country: string; status: DashboardSnapshot['status']; activeEvents: number; criticalEvents: number; freshness: DataFreshness; affectedDomains: string[] }
 export interface InfrastructureStatus { domain: string; status: DashboardSnapshot['status']; activeEvents: number; updatedAt: string; freshness: DataFreshness }
-export interface ProviderHealth { name: string; freshness: DataFreshness }
+export interface ProviderHealth { name: string; freshness: DataFreshness; status: DashboardSnapshot['status']; updatedAt: string | null; mode: string; message?: string }
 export interface OverviewData { snapshot: DashboardSnapshot; countries: CountryStatus[]; infrastructure: InfrastructureStatus[]; events: OverviewEvent[]; providers: ProviderHealth[] }
 
 const countryCoordinates: Record<string, { latitude: number; longitude: number }> = {
@@ -68,8 +68,11 @@ export function Overview({ data }: { data: OverviewData }) {
         </DashboardPanel>
       </DashboardGrid>
 
-      <DashboardPanel title="Data source health" subtitle="Underlying provider availability and freshness" status={overallStatus} timestamp={data.snapshot.updatedAt}>
-        <div className="provider-health-grid">{data.providers.map((provider) => <div className={`provider-health-row status-${providerStatus(provider.freshness).toLowerCase()}`} key={provider.name}><span className="provider-name">{provider.name}</span><DataFreshnessIndicator freshness={provider.freshness} updatedAt={provider.freshness} compact /><StatusIndicator status={providerStatus(provider.freshness)} compact /></div>)}</div>
+      <DashboardPanel title="Data source health" subtitle="Provider availability, freshness, and adapter mode" status={overallStatus} timestamp={data.snapshot.updatedAt}>
+        <div className="provider-health-grid">{data.providers.map((provider) => {
+          const status = provider.status ?? providerStatus(provider.freshness)
+          return <div className={`provider-health-row status-${status.toLowerCase()}`} key={provider.name}><span className="provider-name">{provider.name}</span><small className="provider-mode">{(provider.mode ?? 'mock').toUpperCase()}</small><DataFreshnessIndicator freshness={provider.freshness} updatedAt={provider.updatedAt ?? provider.freshness} compact /><StatusIndicator status={status} compact label={provider.message ?? undefined} /></div>
+        })}</div>
       </DashboardPanel>
     </>
   )

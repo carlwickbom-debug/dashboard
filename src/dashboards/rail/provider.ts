@@ -2,6 +2,8 @@ import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
 import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
 import { railAnomalyRules } from '../../data/anomalies/domainRules'
+import { createRailProvider } from '../../data/providers/domainFactories'
+import type { RailDataProvider } from '../../data/providers/contracts'
 import { events } from '../../data/mock/mockData'
 import { Rail, type RailData } from './Rail'
 
@@ -55,4 +57,4 @@ const data: RailData = {
   ],
 }
 
-export const railProvider: DashboardDefinition<RailData> = { id: 'rail', name: 'RAIL', description: 'Train traffic, schedule adherence, infrastructure and service continuity.', icon: 'train', category: 'Mobility', component: Rail, enabled: true, provider: createAnomalyAwareProvider({ id: 'rail', provider: createMockProvider('rail', data), rules: railAnomalyRules, thresholds: { delayMinutes: 10 } }) }
+export const railProvider: DashboardDefinition<RailData, RailDataProvider> = { id: 'rail', name: 'RAIL', description: 'Train traffic, schedule adherence, infrastructure and service continuity.', icon: 'train', category: 'Mobility', component: Rail, enabled: true, provider: createRailProvider(createAnomalyAwareProvider({ id: 'rail', provider: createMockProvider('rail', data), rules: railAnomalyRules, thresholds: { delayMinutes: 10 } })) }

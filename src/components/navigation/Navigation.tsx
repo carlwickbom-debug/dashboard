@@ -1,5 +1,6 @@
 import { Activity, Boxes, Building2, CloudCog, Radar, Ship, TrainFront, Wifi, Zap } from 'lucide-react'
 import type { DashboardDefinition } from '../../data/models'
+import nordicShield from '../../assets/nordic-shield.png'
 
 const icons: Record<string, typeof Activity> = {
   overview: Activity,
@@ -16,7 +17,7 @@ const icons: Record<string, typeof Activity> = {
 export function Navigation({ items, activeId, onSelect }: { items: Array<Pick<DashboardDefinition, 'id' | 'name' | 'category' | 'icon'>>; activeId: string; onSelect: (id: string) => void }) {
   return (
     <aside className="sidebar">
-      <div className="brand-lockup"><div className="brand-logo" aria-label="Nordic operations"><img src="/assets/nordic-shield.svg" alt="Nordic operations shield" /><span>NO</span></div><div><strong>NORDIC OPS</strong><small>OPERATIONAL INTELLIGENCE</small></div></div>
+      <div className="brand-lockup"><div className="brand-logo"><img src={nordicShield} alt="Theia Nordic operations shield" /></div><div><strong>NORDIC OPS</strong><small>OPERATIONAL INTELLIGENCE</small></div></div>
       <div className="navigation-label">COMMAND CENTER</div>
       <nav className="dashboard-navigation" aria-label="Dashboard navigation">
         {items.map((item) => {

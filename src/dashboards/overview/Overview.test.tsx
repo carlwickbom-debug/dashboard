@@ -26,8 +26,8 @@ const data: OverviewData = {
     { id: 'older', timestamp: '08:00 UTC', source: 'Rail', country: 'Sweden', domain: 'Rail', category: 'Infrastructure', severity: 'CRITICAL', title: 'Older event', description: 'Older description' },
   ],
   providers: [
-    { name: 'ENERGY API', freshness: 'LIVE' },
-    { name: 'RAIL API', freshness: 'STALE' },
+    { name: 'ENERGY API', status: 'OK', freshness: 'LIVE', updatedAt: '09:42 UTC', mode: 'mock' },
+    { name: 'RAIL API', status: 'WARNING', freshness: 'STALE', updatedAt: '09:27 UTC', mode: 'mock' },
   ],
 }
 

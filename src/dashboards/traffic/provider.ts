@@ -2,6 +2,8 @@ import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
 import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
 import { trafficAnomalyRules } from '../../data/anomalies/domainRules'
+import { createTrafficProvider } from '../../data/providers/domainFactories'
+import type { TrafficDataProvider } from '../../data/providers/contracts'
 import { events } from '../../data/mock/mockData'
 import { Traffic, type TrafficData } from './Traffic'
 
@@ -36,4 +38,4 @@ const data: TrafficData = {
   ],
 }
 
-export const trafficProvider: DashboardDefinition<TrafficData> = { id: 'traffic', name: 'ROAD TRAFFIC', description: 'Road flow, congestion, incidents, closures, accidents, weather and camera availability.', icon: 'radar', category: 'Mobility', component: Traffic, enabled: true, provider: createAnomalyAwareProvider({ id: 'traffic', provider: createMockProvider('traffic', data), rules: trafficAnomalyRules }) }
+export const trafficProvider: DashboardDefinition<TrafficData, TrafficDataProvider> = { id: 'traffic', name: 'ROAD TRAFFIC', description: 'Road flow, congestion, incidents, closures, accidents, weather and camera availability.', icon: 'radar', category: 'Mobility', component: Traffic, enabled: true, provider: createTrafficProvider(createAnomalyAwareProvider({ id: 'traffic', provider: createMockProvider('traffic', data), rules: trafficAnomalyRules })) }

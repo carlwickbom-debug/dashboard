@@ -2,6 +2,8 @@ import type { DashboardDefinition } from '../../data/models'
 import { createMockProvider } from '../../data/providers/mockProvider'
 import { createAnomalyAwareProvider } from '../../data/anomalies/anomaly'
 import { networkAnomalyRules, networkHistory } from '../../data/anomalies/domainRules'
+import { createNetworkProvider } from '../../data/providers/domainFactories'
+import type { NetworkDataProvider } from '../../data/providers/contracts'
 import { events } from '../../data/mock/mockData'
 import { Networks, type NetworksData } from './Networks'
 
@@ -52,4 +54,4 @@ const data: NetworksData = {
   mapLayers: [{ id: 'network-routes', label: 'Network routes', color: '#5b9fec', lines: [{ id: 'route-stockholm-helsinki', label: 'Stockholm–Helsinki', points: [{ id: 'node-stockholm', label: 'Stockholm Exchange', latitude: 59.33, longitude: 18.07, severity: 'MEDIUM' }, { id: 'node-helsinki', label: 'Helsinki Edge', latitude: 60.17, longitude: 24.94, severity: 'HIGH' }], color: '#e9894a', width: 2 }, { id: 'route-oslo-bergen', label: 'Oslo–Bergen', points: [{ id: 'node-oslo', label: 'Oslo Core', latitude: 59.91, longitude: 10.75, severity: 'LOW' }, { id: 'node-bergen', label: 'Bergen Transit', latitude: 60.39, longitude: 5.32, severity: 'LOW' }], color: '#56c7a5', width: 2 }], points: [{ id: 'node-stockholm', label: 'Stockholm Exchange', latitude: 59.33, longitude: 18.07, severity: 'LOW' }, { id: 'node-helsinki', label: 'Helsinki Edge', latitude: 60.17, longitude: 24.94, severity: 'HIGH', detail: 'Elevated latency' }, { id: 'node-oslo', label: 'Oslo Core', latitude: 59.91, longitude: 10.75, severity: 'LOW' }, { id: 'node-bergen', label: 'Bergen Transit', latitude: 60.39, longitude: 5.32, severity: 'LOW' }, { id: 'node-tallinn', label: 'Tallinn Core', latitude: 59.44, longitude: 24.75, severity: 'LOW' }] }],
 }
 
-export const networksProvider: DashboardDefinition<NetworksData> = { id: 'networks', name: 'NETWORKS', description: 'Telecommunications, edge performance, routing and service availability.', icon: 'wifi', category: 'Infrastructure', component: Networks, enabled: true, provider: createAnomalyAwareProvider({ id: 'networks', provider: createMockProvider('networks', data), rules: networkAnomalyRules, thresholds: { packetLossIncrease: 0.5 }, historicalValues: networkHistory }) }
+export const networksProvider: DashboardDefinition<NetworksData, NetworkDataProvider> = { id: 'networks', name: 'NETWORKS', description: 'Telecommunications, edge performance, routing and service availability.', icon: 'wifi', category: 'Infrastructure', component: Networks, enabled: true, provider: createNetworkProvider(createAnomalyAwareProvider({ id: 'networks', provider: createMockProvider('networks', data), rules: networkAnomalyRules, thresholds: { packetLossIncrease: 0.5 }, historicalValues: networkHistory })) }
